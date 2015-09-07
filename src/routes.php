@@ -29,10 +29,10 @@ $app->group('/sendatruck',
 
 $app->group('/requests',
     function () use ($app) {
-    $truckRequestsController = new SendATruck\Controllers\TruckRequests($app);
+    $customerTruckRequestsController = new SendATruck\Controllers\CustomerTruckRequests($app);
 
     $app->get('/',
-        function () use ($truckRequestsController) {
-        $truckRequestsController->index();
+        function () use ($customerTruckRequestsController) {
+        $customerTruckRequestsController->index();
     });
 });

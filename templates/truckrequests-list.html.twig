@@ -1,15 +1,21 @@
 <html>
     <body>
-        <table>
+        <table border="1">
             <thead>
-                <td>Customer</td>
+                <td>TruckRequestId</td>
+                <td>CustomerId</td>
                 <td>Date Requested</td>
+                <td>Company Name</td>
+                <td>Address</td>
             </thead>
             <tbody>
                 {% for truckRequest in truckRequests %}
                     <tr>
+                        <td>{{ truckRequest.getTruckRequestId }}</td>
                         <td>{{ truckRequest.getCustomerId }}</td>
-                        <td>{{ truckRequest.getTimestamp.format("Y-m-d") }}</td>
+                        <td>{{ truckRequest.getTimestamp.format("Y-m-d H:m:s") }}</td>
+                        <td>{{ truckRequest.getCustomerName }}</td>
+                        <td>{{ truckRequest.getCustomerAddressAsString }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
