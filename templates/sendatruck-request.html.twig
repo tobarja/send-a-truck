@@ -1,8 +1,15 @@
+<!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/site.css">
+        <meta name="viewport" content="width=device-width">
+    </head>
     <body>
-        <form action="/sendatruck" method="POST">
-            <input type="submit" name="submit" value="Send A Truck">
-            <input type="hidden" name="id" value="{{ id }}">
-        </form>
+        <div id="pageContainer">
+            <form action="/sendatruck" method="POST">
+                <input class="button big-btn center" type="submit" name="submit" value="Send A Truck">
+                <input type="hidden" name="id" value="{{ id }}">
+            </form>
+        </div>
     </body>
 </html>
