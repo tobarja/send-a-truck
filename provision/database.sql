@@ -14,9 +14,10 @@ CREATE TABLE `Customers` (
   `state` varchar(50) NOT NULL,
   `zip` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `Customers` VALUES (1,'Acme, Inc.','James','Smith','jsmith@acme.com','9105551212','123 Main St',NULL,'Rockingham','NC','28379');
+INSERT INTO `Customers` VALUES (2,'Wheels R Us.','Motley','Crue','mcrue@wheelsrus.com','9105552323','40 Apple Rd',NULL,'Hamlet','NC','28345');
 DROP TABLE IF EXISTS `TruckRequests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -27,5 +28,8 @@ CREATE TABLE `TruckRequests` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `TruckRequests_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `Customers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `TruckRequests` VALUES (1,1,'2015-09-06 09:07:58');
+INSERT INTO `TruckRequests` VALUES (2,2,'2015-09-07 11:08:09');
+INSERT INTO `TruckRequests` VALUES (3,1,'2015-09-07 13:08:15');
