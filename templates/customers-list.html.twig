@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <table>
+            {% for customer in customers %}
+                <tr>
+                    <td><a href="/customers/{{ customer.id }}">{{ customer.getCompanyName }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

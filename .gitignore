@@ -2,3 +2,4 @@
 logs/
 vendor/
 nbproject/
+config.php
