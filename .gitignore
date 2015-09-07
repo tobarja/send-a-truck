@@ -1,4 +1,4 @@
 .vagrant/
 logs/
 vendor/
-/nbproject/private/
+nbproject/
