@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/site.css">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        {% include 'menu.twig' %}
+        <h1>View Customer</h1>
+        <table>
+            <tr>
+                <td>Company Name:</td>
+                <td>{{ customer.getCompanyName }}</td>
+            </tr>
+            <tr>
+                <td>Contact Name:</td>
+                <td>{{ customer.getFirstName }} {{ customer.getLastName }}</td>
+            </tr>
+            <tr>
+                <td>Telephone:</td>
+                <td>{{ customer.getTelephone }}</td>
+            </tr>
+            <tr>
+                <td>Telephone:</td>
+                <td>{{ customer.getTelephone }}</td>
+            </tr>
+        </table>
+    </body>
+</html>

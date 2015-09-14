@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/site.css">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        {% include 'menu.twig' %}
+        <h1>View User</h1>
+        <table>
+            <tr>
+                <td>UserName:</td>
+                <td>{{ user.getUserName }}</td>
+            </tr>
+            <tr>
+                <td>Permissions:</td>
+                <td>
+                    {% for permission in permissions %}
+                        {{ permission.getPermission }}
+                        {% if edit_user_permissions %}(<a href="removePermission/{{ permission.getId }}">remove</a>){% endif %}<br />
+                    {% endfor %}
+                </td>
+            </tr>
+            {% if edit_user_permissions %}
+                <tr>
+                <form action="addPermission" method="post"> 
+                    <td>New Permission:</td>
+                    <td>
+                        <input type="text" name="permission" tabindex="1" />
+                        <input type="hidden" name="userid" value="{{ user.getId }}"/>
+                        <input type="submit" />
+                    </td>
+                    </tr>
+                </form>
+            {% endif %}
+        </table>
+    </body>
+</html>

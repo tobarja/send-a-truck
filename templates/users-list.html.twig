@@ -6,11 +6,12 @@
     </head>
     <body>
         {% include 'menu.twig' %}
-        <h1>List Customers</h1>
+        <h1>List Users</h1>
+        <div><a href="/users/new">New User</a></div>
         <table>
-            {% for customer in customers %}
+            {% for user in users %}
                 <tr>
-                    <td><a href="/customers/{{ customer.id }}">{{ customer.getCompanyName }}</a></td>
+                    <td><a href="{{ user.getId }}">{{ user.getUserName }}</a></td>
                 </tr>
             {% endfor %}
         </table>

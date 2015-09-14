@@ -33,3 +33,30 @@ CREATE TABLE `TruckRequests` (
 INSERT INTO `TruckRequests` VALUES (1,1,'2015-09-06 09:07:58');
 INSERT INTO `TruckRequests` VALUES (2,2,'2015-09-07 11:08:09');
 INSERT INTO `TruckRequests` VALUES (3,1,'2015-09-07 13:08:15');
+DROP TABLE IF EXISTS `UserPermissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `UserPermissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `UserPermissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Customers` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `UserPermissions` VALUES (1,1,'view_users');
+INSERT INTO `UserPermissions` VALUES (2,1,'view_requests');
+INSERT INTO `UserPermissions` VALUES (3,1,'view_customers');
+INSERT INTO `UserPermissions` VALUES (4,1,'edit_user_permissions');
+DROP TABLE IF EXISTS `Users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `Users` VALUES (1,'admin','$2y$10$2AF22We0Ab3zmPSBxWfWkOK559OBel/3Bi3At5BFcZ9jeiuPRSLeK');

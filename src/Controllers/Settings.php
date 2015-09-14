@@ -2,7 +2,7 @@
 
 namespace SendATruck\Controllers;
 
-class CustomerTruckRequests
+class Settings
 {
 
     /**
@@ -11,31 +11,28 @@ class CustomerTruckRequests
     private $app;
 
     /**
-     * @var \SendATruck\DataLayer\CustomerTruckRequestRepository
+     * @var \SendATruck\DataLayer\CustomerRepository
      */
-    private $customerTruckRequestRepository;
+    private $settingsRepository;
 
     /**
-     * @var SendATruck\DataLayer\PermissionRepository
+     * @var \SendATruck\DataLayer\PermissionRepository;
      */
     private $permissionRepository;
 
     public function __construct($app)
     {
         $this->app = $app;
-        $this->customerTruckRequestRepository = new \SendATruck\DataLayer\CustomerTruckRequestRepository($this->app->db);
         $this->permissionRepository = new \SendATruck\DataLayer\PermissionRepository($this->app->db);
+//        $this->settingsRepository = new \SendATruck\DataLayer\SettingsRepository($this->app->db);
     }
 
     public function index()
     {
-        if (!$this->userHasPermission('view_requests')) {
+        if (!$this->userHasPermission('view_settings')) {
             $this->app->redirect('/');
         }
-
-        $truckRequests = $this->customerTruckRequestRepository->getAll();
-        $this->app->render('truckrequests-list.html.twig',
-            array('truckRequests' => $truckRequests));
+        $this->app->render('settings.html.twig');
     }
 
     public function userHasPermission($permission)
@@ -43,7 +40,8 @@ class CustomerTruckRequests
         if (!array_key_exists('UserId', $_SESSION)) {
             return false;
         }
-        if ($this->permissionRepository->hasPermission($permission, $_SESSION['UserId'])) {
+        if ($this->permissionRepository->hasPermission($permission,
+                $_SESSION['UserId'])) {
             return true;
         }
         return false;

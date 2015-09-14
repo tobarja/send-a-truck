@@ -16,6 +16,7 @@ class TruckRequests
      * @var \SendATruck\DataLayer\CustomerRepository
      */
     private $customerRepository;
+
     /**
      * @var \SendATruck\DataLayer\TruckRequestRepository
      */
@@ -26,13 +27,6 @@ class TruckRequests
         $this->app = $app;
         $this->customerRepository = new \SendATruck\DataLayer\CustomerRepository($this->app->db);
         $this->truckRequestRepository = new \SendATruck\DataLayer\TruckRequestRepository($this->app->db);
-    }
-
-    public function index()
-    {
-        $truckRequests = $this->truckRequestRepository->getAll();
-        $this->app->render('truckrequests-list.html.twig',
-            array('truckRequests' => $truckRequests));
     }
 
     public function requestById($custId)
