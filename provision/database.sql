@@ -43,12 +43,13 @@ CREATE TABLE `UserPermissions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `UserPermissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `UserPermissions` VALUES (1,1,'view_users');
 INSERT INTO `UserPermissions` VALUES (2,1,'view_requests');
 INSERT INTO `UserPermissions` VALUES (3,1,'view_customers');
 INSERT INTO `UserPermissions` VALUES (4,1,'edit_user_permissions');
+INSERT INTO `UserPermissions` VALUES (5,1,'edit_users');
 DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
