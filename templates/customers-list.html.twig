@@ -8,6 +8,11 @@
         {% include 'menu.twig' %}
         <h1>List Customers</h1>
         <table>
+            <tr>
+                <td><a href="/customers/new">Add Customer</a></td>
+            </tr>
+        </table>
+        <table>
             {% for customer in customers %}
                 <tr>
                     <td><a href="/customers/{{ customer.id }}">{{ customer.getCompanyName }}</a></td>

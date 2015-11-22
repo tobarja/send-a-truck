@@ -31,6 +31,14 @@ $app->group('/customers',
         function () use ($customersController) {
         $customersController->index();
     });
+    $app->get('/new',
+        function () use ($customersController) {
+         $customersController->newCustomer();
+    });
+    $app->post('/new',
+        function () use ($customersController) {
+        $customersController->newCustomerPost();
+    });
     $app->get('/:id',
         function ($id) use ($customersController) {
         $customersController->show($id);

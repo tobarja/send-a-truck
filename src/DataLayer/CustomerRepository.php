@@ -17,8 +17,47 @@ class CustomerRepository
         $this->db = $db;
     }
 
+    public function add(Customer $customer)
+    {
+        $query = "INSERT INTO Customers (company_name, first_name, last_name,
+            email, telephone, address1, address2, city, state, zip)
+            VALUES (:company_name, :first_name, :last_name, :email, :telephone, 
+            :address1, :address2, :city, :state, :zip)";
+        $statement = $this->db->prepare($query);
+        $fields = $this->CustomerToArray($customer);
+
+        try {
+            $this->db->beginTransaction();
+            if ($statement->execute($fields)) {
+                $id = $this->db->lastInsertId();
+                $this->db->commit();
+                return $id;
+            }
+
+            $this->db->rollBack();
+        } catch (Exception $ex) {
+            echo $ex->getTraceAsString();
+        }
+        return false;
+    }
+
+    private function CustomerToArray(Customer $customer)
+    {
+        $result = array();
+        $result['company_name'] = $customer->getCompanyName();
+        $result['first_name'] = $customer->getFirstName();
+        $result['last_name'] = $customer->getLastName();
+        $result['email'] = $customer->getEmail();
+        $result['telephone'] = $customer->getTelephone();
+        $result['address1'] = '';
+        $result['address2'] = '';
+        $result['city'] = '';
+        $result['state'] = '';
+        $result['zip'] = '';
+        return $result;
+    }
+
     /**
-     * 
      * @param integer $id
      * @return Customer
      */
