@@ -67,8 +67,9 @@ class Users
         $id = $this->userRepository->add($user);
         if ($id) {
             $this->app->redirect('/users/' . $id);
+        } else {
+            $this->app->redirect('/users/');
         }
-        $this->app->redirect('/users/');
     }
 
     public function show($userId)
