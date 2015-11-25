@@ -77,4 +77,29 @@ class Customer
     {
         return $this->telephone;
     }
+
+    public function getAddress1()
+    {
+        return $this->address1;
+    }
+
+    public function getAddress2()
+    {
+        return $this->address2;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function getZip()
+    {
+        return $this->zip;
+    }
 }

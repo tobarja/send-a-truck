@@ -24,7 +24,7 @@ class CustomerRepository
             VALUES (:company_name, :first_name, :last_name, :email, :telephone, 
             :address1, :address2, :city, :state, :zip)";
         $statement = $this->db->prepare($query);
-        $fields = $this->CustomerToArray($customer);
+        $fields = $this->customerToArray($customer);
 
         try {
             $this->db->beginTransaction();
@@ -41,7 +41,7 @@ class CustomerRepository
         return false;
     }
 
-    private function CustomerToArray(Customer $customer)
+    private function customerToArray(Customer $customer)
     {
         $result = array();
         $result['company_name'] = $customer->getCompanyName();
@@ -49,12 +49,33 @@ class CustomerRepository
         $result['last_name'] = $customer->getLastName();
         $result['email'] = $customer->getEmail();
         $result['telephone'] = $customer->getTelephone();
-        $result['address1'] = '';
-        $result['address2'] = '';
-        $result['city'] = '';
-        $result['state'] = '';
-        $result['zip'] = '';
+        $result['address1'] = $customer->getAddress1();
+        $result['address2'] = $customer->getAddress2();
+        $result['city'] = $customer->getCity();
+        $result['state'] = $customer->getState();
+        $result['zip'] = $customer->getZip();
         return $result;
+    }
+
+    public function update(Customer $customer)
+    {
+        $query = "UPDATE Customers SET company_name = :company_name, 
+            first_name = :first_name, last_name = :last_name, email = :email,
+            telephone = :telephone, address1 = :address1, address2 = :address2,
+            city = :city, state = :state, zip = :zip
+            WHERE id = :id";
+        $statement = $this->db->prepare($query);
+        $fields = $this->customerToArray($customer);
+
+        try {
+            $this->db->beginTransaction();
+            if ($statement->execute($fields)) {
+                $this->db->commit();
+            }
+        } catch (Exception $ex) {
+            $this->db->rollBack();
+            throw $ex;
+        }
     }
 
     /**
