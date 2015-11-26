@@ -14,6 +14,7 @@ apt-get install -y apache2 mysql-server libapache2-mod-php5 php5-mysql
 [ -f /home/vagrant/logs ] || mkdir -p /home/vagrant/logs
 chown vagrant:vagrant /home/vagrant/logs
 cp /vagrant/provision/httpd-sendatruck.conf /etc/apache2/sites-available/
+[ -f /vagrant/config.php ] || cp /vagrant/provision/config.php /vagrant/
 a2ensite httpd-sendatruck
 cp /vagrant/provision/vagrant-apache2.conf /etc/apache2/conf-available/
 a2enconf vagrant-apache2

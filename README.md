@@ -1,5 +1,9 @@
 # Send A Truck
 
+## Configuration
+Copy the `config.php` file from the provision/ directory into the root of this site.
+Edit the copy of `config.php` as necessary to match your environment.
+
 ## Vagrant
 This repo uses Vagrant for easy setup of a development environment.
 Install Virtualbox and Vagrant, if you do not already have them.

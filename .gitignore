@@ -2,4 +2,4 @@
 logs/
 vendor/
 nbproject/
-config.php
+/config.php
