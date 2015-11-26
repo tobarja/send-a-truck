@@ -75,7 +75,7 @@ $app->group('/users',
     });
 });
 
-$app->group('/sendatruck',
+$app->group($app->truckRequestUrl,
     function () use ($app) {
     $truckRequestsController = new SendATruck\Controllers\TruckRequests($app);
 

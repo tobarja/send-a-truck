@@ -17,6 +17,8 @@ $app->container->singleton('db', function () {
     return new \PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASS);
 });
 
+$app->container->set('truckRequestUrl', TRUCK_REQUEST_URL);
+
 require '../src/routes.php';
 
 $app->run();
