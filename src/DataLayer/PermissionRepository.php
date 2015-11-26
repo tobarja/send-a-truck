@@ -22,11 +22,10 @@ class PermissionRepository
         $query = "INSERT INTO UserPermissions (user_id, permission)"
             . " VALUES (:user_id, :permission)";
         $statement = $this->db->prepare($query);
-        $userId = $permission->getUserId();
-        $permissionName = $permission->getPermission();
-        $statement->bindParam("user_id", $userId, \PDO::PARAM_INT);
-        $statement->bindParam("permission", $permissionName, \PDO::PARAM_STR);
-        return $statement->execute();
+        $fields = $permission->toDatabaseArray();
+        unset($fields['id']);
+
+        return $statement->execute($fields);
     }
 
     public function getById($id)
@@ -40,8 +39,7 @@ EOT;
         $statement->bindParam("id", $id, \PDO::PARAM_INT);
         $dbResult = $statement->execute();
         $func = function ($row) {
-            return UserPermission::Hydrate($row["id"], $row["user_id"],
-                    $row["permission"]);
+            return new UserPermission($row);
         };
         if ($dbResult) {
             $rows = $statement->fetchAll();
@@ -66,8 +64,7 @@ EOT;
         if ($dbResult) {
             $rows = $statement->fetchAll();
             foreach ($rows as $row) {
-                $result[] = UserPermission::Hydrate($row["id"], $row["user_id"],
-                        $row["permission"]);
+                $result[] = new UserPermission($row);
             }
         }
         return $result;

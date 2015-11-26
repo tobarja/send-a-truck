@@ -24,7 +24,8 @@ class CustomerRepository
             VALUES (:company_name, :first_name, :last_name, :email, :telephone, 
             :address1, :address2, :city, :state, :zip)";
         $statement = $this->db->prepare($query);
-        $fields = $this->customerToArray($customer);
+        $fields = $customer->toDatabaseArray();
+        unset($fields['id']);
 
         try {
             $this->db->beginTransaction();
@@ -41,22 +42,6 @@ class CustomerRepository
         return false;
     }
 
-    private function customerToArray(Customer $customer)
-    {
-        $result = array();
-        $result['company_name'] = $customer->getCompanyName();
-        $result['first_name'] = $customer->getFirstName();
-        $result['last_name'] = $customer->getLastName();
-        $result['email'] = $customer->getEmail();
-        $result['telephone'] = $customer->getTelephone();
-        $result['address1'] = $customer->getAddress1();
-        $result['address2'] = $customer->getAddress2();
-        $result['city'] = $customer->getCity();
-        $result['state'] = $customer->getState();
-        $result['zip'] = $customer->getZip();
-        return $result;
-    }
-
     public function update(Customer $customer)
     {
         $query = "UPDATE Customers SET company_name = :company_name, 
@@ -65,7 +50,7 @@ class CustomerRepository
             city = :city, state = :state, zip = :zip
             WHERE id = :id";
         $statement = $this->db->prepare($query);
-        $fields = $this->customerToArray($customer);
+        $fields = $customer->toDatabaseArray();
 
         try {
             $this->db->beginTransaction();
@@ -95,11 +80,7 @@ EOT;
         if ($dbResult) {
             $rows = $statement->fetchAll();
             if (count($rows) == 1) {
-                $row = $rows[0];
-                return Customer::Hydrate($row['id'], $row['company_name'],
-                        $row['first_name'], $row['last_name'], $row['email'],
-                        $row['telephone'], $row['address1'], $row['address2'],
-                        $row['city'], $row['state'], $row['zip']);
+                return new Customer($rows[0]);
             }
         }
         return new Customer();
@@ -122,10 +103,7 @@ EOT;
         if ($dbResult) {
             $rows = $statement->fetchAll();
             foreach ($rows as $row) {
-                $result[] = Customer::Hydrate($row['id'], $row['company_name'],
-                        $row['first_name'], $row['last_name'], $row['email'],
-                        $row['telephone'], $row['address1'], $row['address2'],
-                        $row['city'], $row['state'], $row['zip']);
+                $result[] = new Customer($row);
             }
         }
         return $result;

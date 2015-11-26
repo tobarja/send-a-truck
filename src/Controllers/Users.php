@@ -63,7 +63,9 @@ class Users
             $this->app->redirect('/users/' . $dupUser->getId());
         }
 
-        $user = new User($userName, $password);
+        $user = new User();
+        $user->setUserName($userName);
+        $user->setPassword($password);
         $id = $this->userRepository->add($user);
         if ($id) {
             $this->app->redirect('/users/' . $id);
@@ -92,7 +94,10 @@ class Users
         $permissionName = $this->app->request->post('permission');
         $userId = $this->app->request()->post('userid');
 
-        $userPermission = new UserPermission($userId, $permissionName);
+        $userPermission = new UserPermission();
+        $userPermission->setUserId($userId);
+        $userPermission->setPermission($permissionName);
+
         $this->permissionRepository->add($userPermission);
         $this->app->redirect('/users/' . $userId);
     }

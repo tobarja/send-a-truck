@@ -33,10 +33,7 @@ EOT;
         if ($dbResult) {
             $rows = $statement->fetchAll();
             foreach ($rows as $row) {
-                $result[] = new CustomerTruckRequest($row['tr_id'],
-                        $row['customer_id'], new \DateTime($row['timestamp']),
-                        $row['company_name'], $row['address1'], $row['address2'],
-                        $row['city'], $row['state'], $row['zip']);
+                $result[] = new CustomerTruckRequest($row);
             }
         } else {
             // TODO: Logging:print_r($statement->errorInfo());

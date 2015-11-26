@@ -2,37 +2,33 @@
 
 namespace SendATruck\Objects;
 
-class CustomerTruckRequest
+class CustomerTruckRequest extends DataMapperObject
 {
 
-    private $truckRequestId;
-    private $customerId;
+    protected $truckRequestId;
+    protected $customerId;
+    protected $timestamp;
+    protected $customerName;
+    protected $customerAddress1;
+    protected $customerAddress2;
+    protected $customerCity;
+    protected $customerState;
+    protected $customerZip;
 
-    /**
-     *
-     * @var \DateTime
-     */
-    private $timestamp;
-    private $customerName;
-    private $customerAddress1;
-    private $customerAddress2;
-    private $customerCity;
-    private $customerState;
-    private $customerZip;
-
-    public function __construct($truckRequestId, $customerId,
-        \DateTime $timestamp, $customerName, $customerAddress1,
-        $customerAddress2, $customerCity, $customerState, $customerZip)
+    public function __construct(array $data = array())
     {
-        $this->truckRequestId = $truckRequestId;
-        $this->customerId = $customerId;
-        $this->timestamp = $timestamp;
-        $this->customerName = $customerName;
-        $this->customerAddress1 = $customerAddress1;
-        $this->customerAddress2 = $customerAddress2;
-        $this->customerCity = $customerCity;
-        $this->customerState = $customerState;
-        $this->customerZip = $customerZip;
+        $fieldMap = array(
+            'truckRequestId' => 'tr_id',
+            'customerId' => 'customer_id',
+            'timestamp' => 'timestamp',
+            'customerName' => 'company_name',
+            'customerAddress1' => 'address1',
+            'customerAddress2' => 'address2',
+            'customerCity ' => 'city',
+            'customerState ' => 'state',
+            'customerZip' => 'zip'
+        );
+        parent::__construct($fieldMap, $data);
     }
 
     public function getTruckRequestId()
@@ -51,7 +47,7 @@ class CustomerTruckRequest
      */
     public function getTimestamp()
     {
-        return $this->timestamp;
+        return new \DateTime($this->timestamp);
     }
 
     public function getCustomerName()

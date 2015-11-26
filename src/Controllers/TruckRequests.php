@@ -48,7 +48,9 @@ class TruckRequests
             $this->app->redirect('/');
         }
 
-        $truckRequest = new TruckRequest($custId, new \DateTime());
+        $truckRequest = new TruckRequest();
+        $truckRequest->setCustomerId($custId);
+        $truckRequest->setTimestamp();
         $this->truckRequestRepository->save($truckRequest);
         $this->app->redirect('/');
     }

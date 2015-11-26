@@ -2,34 +2,23 @@
 
 namespace SendATruck\Objects;
 
-class User
+class User extends DataMapperObject
 {
 
-    private $id;
-    private $userName;
-    private $password;
+    const MINIMUM_PASSWORD_LENGTH = 8;
 
-    public function __construct($userName = "", $password = null)
+    protected $id;
+    protected $userName;
+    protected $password;
+
+    public function __construct(array $data = array())
     {
-        $this->userName = $userName;
-        if (!is_null($password)) {
-            $this->password = password_hash($password, PASSWORD_DEFAULT);
-        }
-    }
-
-    /**
-     * @param int $id
-     * @param string $userName
-     * @param string $password
-     * @return SendATruck\Objects\User
-     */
-    public static function Hydrate($id, $userName, $password)
-    {
-        $result = new User($userName);
-        $result->setId($id);
-        $result->setHashedPassword($password);
-
-        return $result;
+        $fieldMaps = array(
+            'id' => 'id',
+            'userName' => 'username',
+            'password' => 'password'
+        );
+        parent::__construct($fieldMaps, $data);
     }
 
     public function getId()
@@ -47,14 +36,25 @@ class User
         return $this->userName;
     }
 
+    public function setUserName($userName)
+    {
+        $this->userName = $userName;
+    }
+
     public function getHashedPassword()
     {
         return $this->password;
     }
 
-    public function setHashedPassword($password)
+    public function setPassword($password)
     {
-        $this->password = $password;
+        if (is_null($password)) {
+            throw new \InvalidArgumentException('Password can not be null');
+        }
+        if (strlen($password) < self::MINIMUM_PASSWORD_LENGTH) {
+            throw new \InvalidArgumentException('Password must be at least '.self::MINIMUM_PASSWORD_LENGTH.' characters');
+        }
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function isPassword($password)

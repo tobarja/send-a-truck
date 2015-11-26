@@ -2,23 +2,20 @@
 
 namespace SendATruck\Objects;
 
-class UserPermission
+class UserPermission extends DataMapperObject
 {
-    private $id;
-    private $userId;
-    private $permission;
+    protected $id;
+    protected $userId;
+    protected $permission;
 
-    public function __construct($userId, $permission)
+    public function __construct(array $data = array())
     {
-        $this->userId = $userId;
-        $this->permission = $permission;
-    }
-
-    public static function Hydrate($id, $userId, $permission)
-    {
-        $result = new UserPermission($userId, $permission);
-        $result->setId($id);
-        return $result;
+        $fieldMaps = array(
+            'id' => 'id',
+            'userId' => 'user_id',
+            'permission' => 'permission'
+        );
+        parent::__construct($fieldMaps, $data);
     }
 
     public function getId()
@@ -36,8 +33,18 @@ class UserPermission
         return $this->userId;
     }
 
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
     public function getPermission()
     {
         return $this->permission;
+    }
+
+    public function setPermission($permissionName)
+    {
+        $this->permission = $permissionName;
     }
 }

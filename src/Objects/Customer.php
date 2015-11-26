@@ -2,55 +2,43 @@
 
 namespace SendATruck\Objects;
 
-class Customer
+class Customer extends DataMapperObject
 {
 
-    private $id;
-    private $companyName;
-    private $firstName;
-    private $lastName;
-    private $email;
-    private $telephone;
-    private $address1;
-    private $address2;
-    private $city;
-    private $state;
-    private $zip;
+    protected $id;
+    protected $companyName;
+    protected $firstName;
+    protected $lastName;
+    protected $email;
+    protected $telephone;
+    protected $address1;
+    protected $address2;
+    protected $city;
+    protected $state;
+    protected $zip;
 
-    public function __construct($companyName = "", $firstName = "",
-        $lastName = "", $email = "", $telephone = "", $address1 = "",
-        $address2 = "", $city = "", $state = "", $zip = "")
+    public function __construct(array $data = array())
     {
-        $this->companyName = $companyName;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->telephone = $telephone;
-        $this->address1 = $address1;
-        $this->address2 = $address2;
-        $this->city = $city;
-        $this->state = $state;
-        $this->zip = $zip;
-    }
+        $fieldMap = array (
+            'id' => 'id',
+            'companyName' => 'company_name',
+            'firstName' => 'first_name',
+            'lastName' => 'last_name',
+            'email' => 'email',
+            'telephone' => 'telephone',
+            'address1' => 'address1',
+            'address2' => 'address2',
+            'city' => 'city',
+            'state' => 'state',
+            'zip' => 'zip'
+        );
 
-    public static function Hydrate($id, $companyName, $firstName, $lastName,
-        $email, $telephone, $address1, $address2, $city, $state, $zip)
-    {
-        $result = new self($companyName, $firstName, $lastName, $email,
-            $telephone, $address1, $address2, $city, $state, $zip);
-        $result->setId($id);
-
-        return $result;
+        parent::__construct($fieldMap, $data);
     }
 
     public function getId()
     {
         return $this->id;
-    }
-
-    protected function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getCompanyName()

@@ -2,31 +2,22 @@
 
 namespace SendATruck\Objects;
 
-class TruckRequest
+class TruckRequest extends DataMapperObject
 {
-    private $id;
-    private $customerId;
-    /**
-     *
-     * @var \DateTime
-     */
-    private $timestamp;
 
-    public function __construct($customerId = "", \DateTime $timestamp = null)
-    {
-        $this->customerId = $customerId;
-        if(is_null($timestamp)) {
-            $this->timestamp = $timestamp;
-        } else {
-            $this->timestamp = new \DateTime();
-        }
-    }
+    protected $id;
+    protected $customerId;
+    protected $timestamp;
 
-    public static function Hydrate($id, $customerId, $timestamp)
+    public function __construct(array $data = array())
     {
-        $object = new self($customerId, $timestamp);
-        $object->id = $id;
-        return $object;
+        $fieldMap = array(
+            'id' => 'id',
+            'customerId' => 'customer_id',
+            'timestamp' => 'timestamp'
+        );
+        parent::__construct($fieldMap, $data);
+        $this->timestamp = new \DateTime($this->timestamp);
     }
 
     public function getId()
@@ -44,8 +35,17 @@ class TruckRequest
         return $this->customerId;
     }
 
+    public function setCustomerId($custId)
+    {
+        $this->customerId = $custId;
+    }
+
+    public function setTimestamp()
+    {
+        $this->timestamp = new \DateTime();
+    }
+
     /**
-     * 
      * @return \DateTime
      */
     public function getTimestamp()

@@ -56,19 +56,7 @@ class Customers
             $this->app->redirect('/');
         }
 
-        $companyName = $this->app->request->post('company_name');
-        $firstName = $this->app->request->post('first_name');
-        $lastName = $this->app->request->post('last_name');
-        $email = $this->app->request->post('email');
-        $telephone = $this->app->request->post('telephone');
-        $address1 = $this->app->request->post('address1');
-        $address2 = $this->app->request->post('address2');
-        $city = $this->app->request->post('city');
-        $state = $this->app->request->post('state');
-        $zip = $this->app->request->post('zip');
-
-        $customer = new Customer($companyName, $firstName, $lastName, $email,
-            $telephone, $address1, $address2, $city, $state, $zip);
+        $customer = new Customer($this->app->request->post());
         $id = $this->customerRepository->add($customer);
         if ($id) {
             $this->app->redirect('/customers/' . $id);

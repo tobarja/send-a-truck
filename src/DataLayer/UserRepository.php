@@ -56,8 +56,7 @@ EOT;
         if ($dbResult) {
             $rows = $statement->fetchAll();
             foreach ($rows as $row) {
-                $result[] = User::Hydrate($row['id'], $row['username'],
-                        $row['password']);
+                $result[] = new User($row);
             }
         } else {
             // TODO: Logging:print_r($statement->errorInfo());
@@ -73,7 +72,7 @@ EOT;
         $statement->bindParam("id", $userId, \PDO::PARAM_INT);
         $dbResult = $statement->execute();
         $func = function ($row) {
-            return User::Hydrate($row['id'], $row['username'], $row['password']);
+            return new User($row);
         };
         if ($dbResult) {
             $rows = $statement->fetchAll();
@@ -95,7 +94,7 @@ EOT;
         $statement->bindParam("username", $userName, \PDO::PARAM_STR);
         $dbResult = $statement->execute();
         $func = function ($row) {
-            return User::Hydrate($row['id'], $row['username'], $row['password']);
+            return new User($row);
         };
         if ($dbResult) {
             $rows = $statement->fetchAll();
