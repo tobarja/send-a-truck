@@ -22,7 +22,9 @@
             </tr>
             <tr>
                 <td>Email:</td>
-                <td>{{ customer.getEmail }}</td>
+                <td>{{ customer.getEmail }}
+                <a href="/customers/emailLink/{{ customer.getId }}">Email Request Link</a>
+                </td>
             </tr>
         </table>
     </body>

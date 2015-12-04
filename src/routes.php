@@ -31,6 +31,10 @@ $app->group('/customers',
         function () use ($customersController) {
         $customersController->index();
     });
+    $app->get('/emailLink/:id',
+        function ($id) use ($customersController) {
+         $customersController->emailLink($id);
+    });
     $app->get('/new',
         function () use ($customersController) {
          $customersController->newCustomer();

@@ -80,6 +80,21 @@ class Customers
             array('customer' => $customer));
     }
 
+    public function emailLink($id)
+    {
+        if (!$this->userHasPermission('view_customers')) {
+            $this->app->redirect('/');
+        }
+
+        $customer = $this->customerRepository->getById($id);
+
+        $emailService = new \SendATruck\Services\EmailService();
+        $linkSender = new \SendATruck\Contexts\EmailRequestLink($emailService, $this->app->truckRequestUrl, $customer);
+        $linkSender->send();
+        $this->app->redirect('/customers/'.$id);
+
+    }
+
     public function userHasPermission($permission)
     {
         if (!array_key_exists('UserId', $_SESSION)) {
