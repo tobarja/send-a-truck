@@ -7,7 +7,7 @@
     <body>
         <div id="pageContainer">
         <h1>{{ requestpage.title }}</h1>
-            <form action="/sendatruck" method="POST">
+            <form action="{{ postAction }}" method="POST">
                 <input class="button big-btn center" type="submit" name="submit" value="Send A Truck">
                 <input type="hidden" name="id" value="{{ id }}">
             </form>

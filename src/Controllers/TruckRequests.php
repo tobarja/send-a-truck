@@ -37,7 +37,8 @@ class TruckRequests
         }
 
         $this->app->render('sendatruck-request.html.twig',
-            array('id' => $custId));
+            array('postAction' => $this->app->truckRequestUrl,
+                'id' => $custId));
     }
 
     public function submitTruckRequest()
