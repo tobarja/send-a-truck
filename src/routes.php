@@ -83,9 +83,9 @@ $app->group($app->truckRequestUrl,
     function () use ($app) {
     $truckRequestsController = new SendATruck\Controllers\TruckRequests($app);
 
-    $app->get('/:id',
-        function ($id) use ($truckRequestsController) {
-        $truckRequestsController->requestById($id);
+    $app->get('/:requestKey',
+        function ($requestKey) use ($truckRequestsController) {
+        $truckRequestsController->requestByKey($requestKey);
     });
     $app->post('/',
         function () use ($truckRequestsController) {

@@ -24,7 +24,7 @@ class EmailRequestLink
     public function send()
     {
 
-        $requestLink = BASEURL.$this->requestUrl.'/'.$this->customer->getId();
+        $requestLink = BASEURL.$this->requestUrl.'/'.$this->customer->getRequestKey();
         $message = "{$this->customer->getFirstName()},
 
 Use this link to request a pickup:

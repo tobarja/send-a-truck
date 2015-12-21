@@ -13,11 +13,13 @@ CREATE TABLE `Customers` (
   `city` varchar(50) NOT NULL,
   `state` varchar(50) NOT NULL,
   `zip` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `request_key` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `request_key` (`request_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `Customers` VALUES (1,'Acme, Inc.','James','Smith','jsmith@acme.com','9105551212','123 Main St',NULL,'Rockingham','NC','28379');
-INSERT INTO `Customers` VALUES (2,'Wheels R Us.','Motley','Crue','mcrue@wheelsrus.com','9105552323','40 Apple Rd',NULL,'Hamlet','NC','28345');
+INSERT INTO `Customers` VALUES (1,'Acme, Inc.','James','Smith','jsmith@acme.com','9105551212','123 Main St',NULL,'Rockingham','NC','28379','9cfb113e1e40cbc291465eab9d2489a8212703d0');
+INSERT INTO `Customers` VALUES (2,'Wheels R Us.','Motley','Crue','mcrue@wheelsrus.com','9105552323','40 Apple Rd',NULL,'Hamlet','NC','28345','c21839b42e70c64bea18f33a4f634429287df388');
 DROP TABLE IF EXISTS `TruckRequests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -43,13 +45,14 @@ CREATE TABLE `UserPermissions` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `UserPermissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Customers` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `UserPermissions` VALUES (1,1,'view_users');
 INSERT INTO `UserPermissions` VALUES (2,1,'view_requests');
 INSERT INTO `UserPermissions` VALUES (3,1,'view_customers');
 INSERT INTO `UserPermissions` VALUES (4,1,'edit_user_permissions');
 INSERT INTO `UserPermissions` VALUES (5,1,'edit_users');
+INSERT INTO `UserPermissions` VALUES (6,1,'edit_customers');
 DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

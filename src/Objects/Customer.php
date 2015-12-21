@@ -16,6 +16,7 @@ class Customer extends DataMapperObject
     protected $city;
     protected $state;
     protected $zip;
+    protected $requestKey;
 
     public function __construct(array $data = array())
     {
@@ -30,7 +31,8 @@ class Customer extends DataMapperObject
             'address2' => 'address2',
             'city' => 'city',
             'state' => 'state',
-            'zip' => 'zip'
+            'zip' => 'zip',
+            'requestKey' => 'request_key'
         );
 
         parent::__construct($fieldMap, $data);
@@ -89,5 +91,10 @@ class Customer extends DataMapperObject
     public function getZip()
     {
         return $this->zip;
+    }
+
+    public function getRequestKey()
+    {
+        return $this->requestKey;
     }
 }

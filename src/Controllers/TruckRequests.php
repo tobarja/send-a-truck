@@ -29,16 +29,16 @@ class TruckRequests
         $this->truckRequestRepository = new \SendATruck\DataLayer\TruckRequestRepository($this->app->db);
     }
 
-    public function requestById($custId)
+    public function requestByKey($requestKey)
     {
-        $customer = $this->customerRepository->getById($custId);
-        if ($customer->getId() != $custId) {
+        $customer = $this->customerRepository->getByRequestKey($requestKey);
+        if ($customer->getRequestKey() != $requestKey) {
             $this->app->redirect('/');
         }
 
         $this->app->render('sendatruck-request.html.twig',
             array('postAction' => $this->app->truckRequestUrl,
-                'id' => $custId));
+                'id' => $customer->getId()));
     }
 
     public function submitTruckRequest()

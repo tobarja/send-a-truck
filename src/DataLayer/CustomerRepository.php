@@ -20,12 +20,13 @@ class CustomerRepository
     public function add(Customer $customer)
     {
         $query = "INSERT INTO Customers (company_name, first_name, last_name,
-            email, telephone, address1, address2, city, state, zip)
+            email, telephone, address1, address2, city, state, zip, request_key)
             VALUES (:company_name, :first_name, :last_name, :email, :telephone, 
-            :address1, :address2, :city, :state, :zip)";
+            :address1, :address2, :city, :state, :zip, :request_key)";
         $statement = $this->db->prepare($query);
         $fields = $customer->toDatabaseArray();
         unset($fields['id']);
+        $fields['request_key'] = sha1(openssl_random_pseudo_bytes(200));
 
         try {
             $this->db->beginTransaction();
@@ -47,7 +48,7 @@ class CustomerRepository
         $query = "UPDATE Customers SET company_name = :company_name, 
             first_name = :first_name, last_name = :last_name, email = :email,
             telephone = :telephone, address1 = :address1, address2 = :address2,
-            city = :city, state = :state, zip = :zip
+            city = :city, state = :state, zip = :zip, request_key = :request_key
             WHERE id = :id";
         $statement = $this->db->prepare($query);
         $fields = $customer->toDatabaseArray();
@@ -64,6 +65,29 @@ class CustomerRepository
     }
 
     /**
+     * @param string $requestKey
+     * @return Customer
+     */
+    public function getByRequestKey($requestKey)
+    {
+        $sql = <<<EOT
+            SELECT id, company_name, first_name, last_name, email, telephone,
+                address1, address2, city, state, zip, request_key
+            FROM Customers
+            WHERE request_key = :request_key
+EOT;
+        $statement = $this->db->prepare($sql);
+        $dbResult = $statement->execute(array('request_key' => $requestKey));
+        if ($dbResult) {
+            $rows = $statement->fetchAll();
+            if (count($rows) == 1) {
+                return new Customer($rows[0]);
+            }
+        }
+        return new Customer();
+    }
+
+    /**
      * @param integer $id
      * @return Customer
      */
@@ -71,7 +95,7 @@ class CustomerRepository
     {
         $sql = <<<EOT
             SELECT id, company_name, first_name, last_name, email, telephone,
-                address1, address2, city, state, zip
+                address1, address2, city, state, zip, request_key
             FROM Customers
             WHERE id = :id
 EOT;
@@ -93,7 +117,7 @@ EOT;
     {
         $sql = <<<EOT
             SELECT id, company_name, first_name, last_name, email, telephone,
-                address1, address2, city, state, zip
+                address1, address2, city, state, zip, request_key
             FROM Customers
 EOT;
 
